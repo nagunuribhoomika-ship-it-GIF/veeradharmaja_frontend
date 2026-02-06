@@ -1,42 +1,53 @@
-import { Link } from "react-router-dom";
-import { FiHome, FiPhone, FiUser } from "react-icons/fi";
+import footerBg from "../assets/hero/Veera Dharmaja Events.png"; // adjust name if needed
+import "./Footer.css";
 
 function Footer() {
   return (
-    <footer style={styles.footer}>
-      <Link to="/" style={styles.icon}>
-        <FiHome size={22} />
-      </Link>
+    <footer
+      className="home-footer"
+style={{
+  backgroundImage: `
+    linear-gradient(
+      rgba(0,0,0,0.4),
+      rgba(0,0,0,0.4)
+    ),
+    url(${footerBg})
+  `
+}}
 
-      <Link to="/contact" style={styles.icon}>
-        <FiPhone size={22} />
-      </Link>
+    >
+      <div className="footer-content">
+        <div className="footer-column">
+          <h3>Veera Dharmaja Events</h3>
+          <p>
+            Crafting beautiful celebrations with creativity,
+            precision, and a passion for unforgettable moments.
+          </p>
+        </div>
 
-      <Link to="/profile" style={styles.icon}>
-        <FiUser size={22} />
-      </Link>
+        <div className="footer-column">
+          <h4>Our Services</h4>
+          <ul>
+            <li>Wedding Events</li>
+            <li>Engagement & Sangeeth</li>
+            <li>Birthday Celebrations</li>
+            <li>Corporate Events</li>
+          </ul>
+        </div>
+
+        <div className="footer-column">
+          <h4>Contact Us</h4>
+          <p>📍 Godhavarikhani, Telangana</p>
+          <p>📞 +91 XXXXX XXXXX</p>
+          <p>📧 veeradharmajaevents@gmail.com</p>
+        </div>
+      </div>
+
+      <div className="footer-bottom">
+        © {new Date().getFullYear()} Veera Dharmaja Events. All rights reserved.
+      </div>
     </footer>
   );
 }
-
-const styles = {
-  footer: {
-    position: "fixed",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    height: "60px",
-    background: "#b693d7",
-    borderTop: "1px solid #ddd",
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center"
-  },
-  icon: {
-    color: "#764ba2",
-    textDecoration: "none"
-  }
-};
-
 
 export default Footer;

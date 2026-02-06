@@ -105,7 +105,7 @@ const styles = {
 },
 
 mediaCard: {
-  background: "rgba(255, 255, 255, 0.85)",
+  background: "rgba(199, 213, 223, 0.81)",
   backdropFilter: "blur(6px)",
   borderRadius: "18px",
   padding: "30px 20px",

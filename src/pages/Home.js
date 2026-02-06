@@ -7,7 +7,8 @@ import hero2 from "../assets/hero/hero2.jpg"
 import hero3 from "../assets/hero/hero3.jpg"
 import hero4 from "../assets/hero/hero4.jpg"
 import pageBg from "../assets/hero/background.jpg";
-import divider from "../assets/hero/divider.png";
+import Footer from "../components/Footer";
+// or whatever exact image name you want
 
 
 function Home({ events = [] }) {
@@ -23,7 +24,40 @@ useEffect(() => {
   }, 5000); // changes image every 5 seconds
 
   return () => clearInterval(interval);
+},);
+
+useEffect(() => {
+  const setHeroHeight = () => {
+    const vh = window.innerHeight;
+
+    if (window.innerWidth <= 768) {
+      // Mobile
+      document.documentElement.style.setProperty(
+        "--hero-height",
+        `${vh * 0.9}px`
+      );
+    } else if (window.innerWidth <= 1024) {
+      // Tablet
+      document.documentElement.style.setProperty(
+        "--hero-height",
+        `${vh * 0.95}px`
+      );
+    } else {
+      // Desktop
+      document.documentElement.style.setProperty(
+        "--hero-height",
+        `${vh}px`
+      );
+    }
+  };
+
+  setHeroHeight();
+  window.addEventListener("resize", setHeroHeight);
+
+  return () => window.removeEventListener("resize", setHeroHeight);
 }, []);
+
+
 
   return (
     <div
@@ -115,24 +149,16 @@ useEffect(() => {
 {/* SERVICES SECTION */}
 <section className="services-section">
   <div className="services-header center">
-    <h2 className="services-title">Our Services</h2>
-
-    <img
-      src={divider}
-      alt="decorative divider"
-      className="services-divider"
-    />
-
+    <h2 className="services-title">Our Services</h2><br/>
+    <div className="services-divider"></div>
     <p className="services-subtitle">
       Crafting beautiful celebrations with creativity, precision,
       and a deep passion for unforgettable moments.
     </p>
   </div>
-
   <Cards />
 </section>
-
-
+<Footer/>
     </div>
   );
 }

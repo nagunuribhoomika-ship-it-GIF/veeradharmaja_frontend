@@ -38,7 +38,7 @@ html, body, #root {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  /* padding: 0; */
 }
 
 .hero-content {
@@ -94,15 +94,15 @@ html, body, #root {
 /* HOME PAGE BACKGROUND DESIGN */
 /* ============================= */
 
-.home-page {
-  background: 
+/* .home-page {
+  /* background: 
     linear-gradient(
       180deg,
       #ffffff 0%,
       #faf7f2 40%,
       #f3efe8 100%
-    );
-}
+    ); */
+ */
 
 .home-page {
   position: relative;
@@ -175,8 +175,6 @@ html, body, #root {
   max-width: 1200px;
   margin: 0 auto;
 }
-
-
 .event-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -190,13 +188,15 @@ html, body, #root {
 @media (max-width: 768px) {
 
   .hero-section {
-    height: auto;
-    min-height: 100vh;
+    /* height: 100vh;
+    min-height: 100vh; */
+      height: var(--hero-height, 100vh);
+ min-height: var(--hero-height, 100vh);
   }
 
   .hero-overlay {
-    padding-top: 140px;
-    padding-bottom: 60px;
+    padding: 0 0 60px;   /* bottom space only */
+    align-items: center;
   }
 
   .hero-content {
@@ -313,7 +313,8 @@ html, body, #root {
     padding: 60px 20px;
   }
 .coverage-right {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* ✅ 2 × 2 grid */
+    gap: 16px; /* slightly tighter */
   }
 }
 
@@ -493,7 +494,7 @@ html, body, #root {
 /* Center Services Header */
 .services-header.center {
   max-width: 700px;
-  margin: 0 auto 16px;
+  margin: 0 auto 4px;
   text-align: center;
 }
 
@@ -504,11 +505,17 @@ html, body, #root {
 
 /* Decorative divider */
 .services-divider {
-  width: 200px;      /* adjust based on design */
-  margin: 6px auto 10px;
-  display: block;
-  opacity: 0.9;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #6b2c2c,
+    transparent
+  );
+  margin: 8px auto 12px;
 }
+
 
 /* ============================= */
 /* EVENT PAGE */

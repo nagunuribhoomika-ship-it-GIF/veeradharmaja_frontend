@@ -1,9 +1,11 @@
 .site-header {
-  position: absolute;
+  position: fixed;
   top: 0px;
   left:0px;
   width: 100%;
   z-index: 1000;
+  
+  /* position: relative; 🔑 ADD THIS */
 }
 
 .header-inner {
@@ -58,7 +60,7 @@
 
   .header-inner {
     padding: 12px 20px;
-    border-radius: 40px;
+    /* border-radius: 40px; */
   }
 
   .site-title {
@@ -101,4 +103,46 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.hamburger {
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #5a2a2a;
+}
+.mobile-menu {
+  position: absolute;
+  top: 100%;      /* now correctly below header */
+  right: 20px;
+
+  background: #f3f6f4;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 15px 20px;
+  width: 200px;
+  z-index: 1100;
+}
+
+
+.close-btn {
+  align-self: flex-end;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #5a2a2a;
+}
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-nav a {
+  text-decoration: none;
+  color: #5a2a2a;
+  font-weight: 600;
+  font-size: 15px;
 }
