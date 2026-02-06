@@ -5,6 +5,7 @@ function Cards() {
   const [events, setEvents] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const [eventName, setEventName] = useState("");
+  const [coverImage, setCoverImage] = useState(null);
 
   const isAdmin = !!localStorage.getItem("token");
 
@@ -23,29 +24,53 @@ function Cards() {
     loadEvents();
   }, []);
 
-  // Add event
-  const handleAddEvent = async () => {
-    if (!eventName.trim()) return;
+  // ✅ Add event WITH image (UI-side change only)
+ const handleAddEvent = async () => {
+  if (!eventName.trim()) return;
 
-    try {
-      await fetch("http://localhost:5000/api/events", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-        body: JSON.stringify({ name: eventName })
-      });
+  try {
+    // 1️⃣ Create event
+    const res = await fetch("http://localhost:5000/api/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify({ name: eventName })
+    });
 
-      setEventName("");
-      setShowAdd(false);
-      loadEvents();
-    } catch (err) {
-      console.error("Failed to create event", err);
+    if (!res.ok) throw new Error("Event creation failed");
+
+    const createdEvent = await res.json();
+
+    // 2️⃣ Upload cover image
+    if (coverImage) {
+      const formData = new FormData();
+      formData.append("file", coverImage);
+
+      await fetch(
+        `http://localhost:5000/api/media/upload/${createdEvent.id}?cover=true`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          },
+          body: formData
+        }
+      );
     }
-  };
 
-  // Delete event (soft delete)
+    setEventName("");
+    setCoverImage(null);
+    setShowAdd(false);
+    loadEvents();
+
+  } catch (err) {
+    console.error("Failed to create event", err);
+  }
+};
+
+  // Delete event
   const handleDeleteEvent = async (id) => {
     if (!window.confirm("Delete this event?")) return;
 
@@ -57,63 +82,103 @@ function Cards() {
         }
       });
 
-      // Reload cards
       loadEvents();
     } catch (err) {
       console.error("Failed to delete event", err);
     }
   };
 
+  const handleCoverUpdate = async (eventId, file) => {
+  if (!file) return;
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    await fetch(
+      `http://localhost:5000/api/media/upload/${eventId}?cover=true`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        },
+        body: formData
+      }
+    );
+
+    loadEvents(); // refresh cards
+  } catch (err) {
+    console.error("Failed to update cover image", err);
+  }
+};
+
+
   return (
-    <div style={{ padding: "20px" }}>
-      <h1 style={{ marginBottom: "20px" }}>My Events</h1>
+    <div className="cards-section">
+      {/* <h1 className="cards-title">Our Services</h1> */}
 
       {/* ADMIN ADD EVENT */}
       {isAdmin && (
-        <div style={{ marginBottom: "25px" }}>
+        <div className="admin-add">
           {!showAdd ? (
             <button onClick={() => setShowAdd(true)}>
               ➕ Add Event
             </button>
           ) : (
-            <div>
+            <div className="admin-form">
               <input
                 placeholder="Event name"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
-                style={{ marginRight: "10px" }}
               />
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setCoverImage(e.target.files[0])}
+              />
+
               <button onClick={handleAddEvent}>Save</button>
-              <button
-                onClick={() => setShowAdd(false)}
-                style={{ marginLeft: "10px" }}
-              >
-                Cancel
-              </button>
+              <button onClick={() => setShowAdd(false)}>Cancel</button>
             </div>
           )}
         </div>
       )}
 
       {/* EVENT CARDS */}
-      <div style={styles.grid}>
+      <div className="cards-grid">
         {events.map((event) => (
-          <div key={event.id} style={{ position: "relative" }}>
-            {/* DELETE BUTTON (ADMIN ONLY) */}
+          <div key={event.id} className="card-wrapper">
             {isAdmin && (
               <button
                 onClick={() => handleDeleteEvent(event.id)}
-                style={styles.deleteBtn}
+                className="delete-btn"
                 title="Delete event"
               >
                 ✕
               </button>
             )}
+             {isAdmin && (
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      handleCoverUpdate(event.id, e.target.files[0])
+    }
+  />
+)}
+
+
 
             <EventCard
               title={event.name}
-              description={`${event.name} celebration`}
+              description={`Creating joyful ${event.name.toLowerCase()} celebrations with elegant themes and seamless arrangements.`}
               link={`/event/${event.slug}`}
+              image={
+                event.cover_image
+                  ? `http://localhost:5000${event.cover_image}`
+                  : null
+              }
             />
           </div>
         ))}
@@ -121,26 +186,5 @@ function Cards() {
     </div>
   );
 }
-
-const styles = {
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "20px"
-  },
-  deleteBtn: {
-    position: "absolute",
-    top: "8px",
-    right: "8px",
-    background: "red",
-    color: "#fff",
-    border: "none",
-    borderRadius: "50%",
-    width: "28px",
-    height: "28px",
-    cursor: "pointer",
-    zIndex: 2
-  }
-};
 
 export default Cards;

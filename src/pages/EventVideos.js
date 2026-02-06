@@ -10,6 +10,8 @@ function EventVideos() {
   const [videos, setVideos] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const isMobile = window.innerWidth <= 768;
+
 
   const isAdmin = !!localStorage.getItem("token");
 
@@ -90,13 +92,29 @@ function EventVideos() {
     trackMouse: true
   });
 
+const showNext = () => {
+  setCurrentIndex((prev) =>
+    prev < videos.length - 1 ? prev + 1 : prev
+  );
+};
+
+const showPrev = () => {
+  setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+};
+
+
+
+
   return (
     <div style={styles.page}>
       <Link to={`/event/${slug}`} style={styles.back}>
         ← Back to {eventName}
       </Link>
 
-      <h1>{eventName} Videos</h1>
+      <h1 style={styles.title}>
+  {eventName} Videos
+</h1>
+
 
       {/* ADMIN UPLOAD */}
       {isAdmin && (
@@ -149,14 +167,29 @@ function EventVideos() {
             ✕
           </span>
 
-          <div {...handlers}>
-            <video
-              src={`http://localhost:5000${videos[currentIndex].file_path}`}
-              controls
-              autoPlay
-              style={styles.fullVideo}
-            />
-          </div>
+          {/* LEFT ARROW – DESKTOP ONLY */}
+{!isMobile && (
+  <button style={styles.navLeft} onClick={showPrev}>
+    ‹
+  </button>
+)}
+
+<div {...handlers}>
+  <video
+    src={`http://localhost:5000${videos[currentIndex].file_path}`}
+    controls
+    autoPlay
+    style={styles.fullVideo}
+  />
+</div>
+
+{/* RIGHT ARROW – DESKTOP ONLY */}
+{!isMobile && (
+  <button style={styles.navRight} onClick={showNext}>
+    ›
+  </button>
+)}
+
         </div>
       )}
     </div>
@@ -165,11 +198,11 @@ function EventVideos() {
 
 const styles = {
   page: {
-    padding: "30px",
-    maxWidth: "1100px",
-    margin: "auto",
-    fontFamily: "Segoe UI, sans-serif"
-  },
+  padding: "30px",
+  paddingTop: "120px",   // SAME AS GALLERY
+  maxWidth: "1100px",
+  margin: "auto",
+},
   back: {
     textDecoration: "none",
     color: "#667eea",
@@ -199,26 +232,62 @@ const styles = {
     zIndex: 2
   },
   overlay: {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(0,0,0,0.85)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
+  position: "fixed",
+  inset: 0,
+  background: "rgba(255, 255, 255, 0.85)",
+  backdropFilter: "blur(6px)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 9999,
+},
+
   fullVideo: {
-    maxWidth: "90%",
-    maxHeight: "90%",
-    borderRadius: "10px"
-  },
-  close: {
-    position: "absolute",
-    top: "20px",
-    right: "30px",
-    fontSize: "30px",
-    color: "#fff",
-    cursor: "pointer"
-  }
+  width: "85vw",
+  height: "85vh",
+  borderRadius: "12px",
+},
+
+ close: {
+  position: "absolute",
+  top: "20px",
+  right: "25px",
+  fontSize: "36px",
+  color: "#272020",
+  cursor: "pointer",
+  zIndex: 10000,
+},
+
+  title: {
+  textAlign: "center",
+  marginBottom: "30px",
+  fontSize: "36px",
+  fontWeight: "700",
+  letterSpacing: "0.5px",
+  fontFamily: `"Playfair Display", serif`,
+  color: "#2f1f1f",
+},
+navLeft: {
+  position: "absolute",
+  left: "30px",
+  color: "#161515",
+  fontSize: "50px",
+  background: "none",
+  border: "none",
+  cursor: "pointer",
+},
+
+navRight: {
+  position: "absolute",
+  right: "30px",
+  color: "#080808",
+  fontSize: "50px",
+  background: "none",
+  border: "none",
+  cursor: "pointer",
+},
+
+
 };
 
 export default EventVideos;

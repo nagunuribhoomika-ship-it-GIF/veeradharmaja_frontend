@@ -10,6 +10,8 @@ function EventGallery() {
   const [images, setImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const isMobile = window.innerWidth <= 768;
+
 
   const isAdmin = !!localStorage.getItem("token");
 
@@ -91,13 +93,27 @@ function EventGallery() {
     trackMouse: true
   });
 
+ const showNext = () => {
+  setCurrentIndex((prev) =>
+    prev < images.length - 1 ? prev + 1 : prev
+  );
+};
+
+const showPrev = () => {
+  setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+};
+
+ 
   return (
     <div style={styles.page}>
       <Link to={`/event/${slug}`} style={styles.back}>
         ← Back to {eventName}
       </Link>
 
-      <h1>{eventName} Photo Gallery</h1>
+     <h1 style={styles.title}>
+  {eventName} Photo Gallery
+</h1>
+
 
       {isAdmin && (
         <div style={{ marginBottom: "20px" }}>
@@ -141,38 +157,64 @@ function EventGallery() {
         ))}
       </div>
 
-      {currentIndex !== null && (
-        <div style={styles.overlay}>
-          <span
-            style={styles.close}
-            onClick={() => setCurrentIndex(null)}
-          >
-            ✕
-          </span>
+     {currentIndex !== null && (
+  <div style={styles.overlay}>
+    <span
+      style={styles.close}
+      onClick={() => setCurrentIndex(null)}
+    >
+      ✕
+    </span>
 
-          <div {...handlers}>
-            <img
-  src={`http://localhost:5000${images[currentIndex].file_path}`}
-  alt="Full view"
-  style={styles.fullImage}
-/>
+    {/* Previous */}
+  {!isMobile && (
+  <button style={styles.navLeft} onClick={showPrev}>
+    ‹
+  </button>
+)}
+    <div {...handlers} style={styles.zoomContainer}>
+      <img
+        src={`http://localhost:5000${images[currentIndex].file_path}`}
+        alt="Full view"
+        style={styles.fullImage}
+      />
+    </div>
 
-          </div>
-        </div>
-      )}
+    {/* Next */}
+   {!isMobile && (
+  <button style={styles.navRight} onClick={showNext}>
+    ›
+  </button>
+)}
+  </div>
+)}
+
     </div>
   );
 }
 
 const styles = {
-  page: { padding: "30px", maxWidth: "1100px", margin: "auto" },
+ page: {
+  padding: "30px",
+  paddingTop: "120px",   // 👈 pushes content below header
+  maxWidth: "1100px",
+  margin: "auto"
+},
+
   back: { textDecoration: "none", color: "#667eea" },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "15px"
+    gap: "20px"
   },
-  image: { width: "100%", borderRadius: "10px" },
+  image: {
+  width: "100%",
+  height: "200px",        // 👈 same height for all images
+  objectFit: "cover",    // 👈 keeps image nicely cropped
+  borderRadius: "10px",
+  cursor: "pointer"
+},
+
   deleteBtn: {
     position: "absolute",
     top: "8px",
@@ -183,21 +225,67 @@ const styles = {
     border: "none"
   },
   overlay: {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(0,0,0,0.85)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  fullImage: { maxWidth: "90%", maxHeight: "90%" },
-  close: {
-    position: "absolute",
-    top: "20px",
-    right: "30px",
-    color: "#fff",
-    fontSize: "30px"
-  }
+  position: "fixed",
+  inset: 0,
+  background: "rgba(255, 255, 255, 0.85)", // 👈 light white
+  backdropFilter: "blur(6px)",             // 👈 soft blur (pro look)
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 9999,
+},
+
+fullImage: {
+  width: "85vw",     // 👈 BIGGER image
+  height: "85vh",
+  objectFit: "contain",
+},
+
+ close: {
+  position: "absolute",
+  top: "20px",
+  right: "25px",
+  color: "#272020",
+  fontSize: "36px",
+  fontWeight: "bold",
+  cursor: "pointer",
+  zIndex: 10000,
+},
+
+  navLeft: {
+  position: "absolute",
+  left: "30px",
+  color: "#161515",
+  fontSize: "50px",
+  background: "none",
+  border: "none",
+  cursor: "pointer",
+},
+
+navRight: {
+  position: "absolute",
+  right: "30px",
+  color: "#080808",
+  fontSize: "50px",
+  background: "none",
+  border: "none",
+  cursor: "pointer",
+},
+title: {
+  textAlign: "center",
+  marginBottom: "30px",
+  fontSize: "36px",
+  fontWeight: "700",
+  letterSpacing: "0.5px",
+  fontFamily: `"Playfair Display", serif`,
+  color: "#2f1f1f",
+},
+zoomContainer: {
+  maxWidth: "100%",
+  maxHeight: "100%",
+  overflow: "auto",          // 👈 allows zoom + pan
+  touchAction: "pinch-zoom", // 👈 enables pinch zoom on mobile
+},
 };
 
 export default EventGallery;
