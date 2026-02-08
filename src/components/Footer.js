@@ -1,29 +1,39 @@
-import footerBg from "../assets/hero/Veera Dharmaja Events.png"; // adjust name if needed
+// import footerBg from "../assets/hero/Veera Dharmaja Events.png"; // adjust name if needed
+import footerLogo from "../assets/hero/Veera Dharmaja Events.png";
+import footerBg from "../assets/hero/footer-dark.jpg";
+
+
 import "./Footer.css";
 
 function Footer() {
   return (
-    <footer
-      className="home-footer"
-style={{
-  backgroundImage: `
-    linear-gradient(
-      rgba(0,0,0,0.4),
-      rgba(0,0,0,0.4)
-    ),
-    url(${footerBg})
-  `
-}}
+<footer
+  className="footer"
+  style={{
+    backgroundImage: `
+      linear-gradient(
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.65)
+      ),
+      url(${footerBg})
+    `
+  }}
+>
 
-    >
       <div className="footer-content">
-        <div className="footer-column">
-          <h3>Veera Dharmaja Events</h3>
-          <p>
-            Crafting beautiful celebrations with creativity,
-            precision, and a passion for unforgettable moments.
-          </p>
-        </div>
+       <div className="footer-column">
+  <img
+    src={footerLogo}
+    alt="Veera Dharmaja Events"
+    className="footer-logo"
+  />
+
+  <p>
+    Crafting beautiful celebrations with creativity,
+    precision, and a passion for unforgettable moments.
+  </p>
+</div>
+
 
         <div className="footer-column">
           <h4>Our Services</h4>

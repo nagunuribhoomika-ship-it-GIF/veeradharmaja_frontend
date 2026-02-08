@@ -7,7 +7,6 @@ import hero2 from "../assets/hero/hero2.jpg"
 import hero3 from "../assets/hero/hero3.jpg"
 import hero4 from "../assets/hero/hero4.jpg"
 import pageBg from "../assets/hero/background.jpg";
-import Footer from "../components/Footer";
 // or whatever exact image name you want
 
 
@@ -24,7 +23,7 @@ useEffect(() => {
   }, 5000); // changes image every 5 seconds
 
   return () => clearInterval(interval);
-},);
+},[]);
 
 useEffect(() => {
   const setHeroHeight = () => {
@@ -74,10 +73,11 @@ useEffect(() => {
 
         <div className="hero-overlay">
           <div className="hero-content">
-           <h1>
-  Event Organisers in Godhavarikhani<br />
-  Veera Dharmaja Events
+          <h1 className="hero-title">
+  Event Organisers in Godhavarikhani
+  <span className="brand-name">Veera Dharmaja Events</span>
 </h1>
+
 
 <p>
   Based in Godhavarikhani, we deliver creative and flawless
@@ -158,7 +158,6 @@ useEffect(() => {
   </div>
   <Cards />
 </section>
-<Footer/>
     </div>
   );
 }

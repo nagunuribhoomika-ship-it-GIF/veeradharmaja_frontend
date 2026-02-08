@@ -1,5 +1,7 @@
 import Header from "./Header";
+import Footer from "./Footer";
 import pageBg from "../assets/hero/background.jpg";
+
 
 function Layout({ children }) {
   return (
@@ -9,11 +11,10 @@ function Layout({ children }) {
     >
       <Header />
 
-      <main style={{ padding: "20px", paddingBottom: "80px" }}>
+      <main className="app-content">
         {children}
       </main>
-
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
