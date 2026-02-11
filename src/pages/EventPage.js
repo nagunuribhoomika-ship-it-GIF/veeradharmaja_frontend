@@ -87,7 +87,8 @@ const styles = {
     fontSize: "32px",
     fontWeight: "700",
     color: "#4c1d95",
-    marginBottom: "10px"
+    marginBottom: "10px",
+    paddingTop:"10px"
   },
 
   description: {

@@ -7,11 +7,11 @@ function About() {
       <div className="relative w-full h-[420px] overflow-hidden">
         
         {/* Background Image */}
-        <img
+        {/* <img
           src={aboutBg}
           alt="About Background"
           className="absolute inset-0 w-full h-full object-cover"
-        />
+        /> */}
 
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/40"></div>

@@ -12,7 +12,7 @@ import Portfolio from "./pages/Portfolio";
 
 
 
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import EventPage from "./pages/EventPage";
 import EventGallery from "./pages/EventGallery";
 import EventVideos from "./pages/EventVideos";

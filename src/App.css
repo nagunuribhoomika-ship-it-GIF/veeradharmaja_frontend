@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Playfair Display', serif !important;
   background: #f8f6f2;
+  padding:0
 }
 
 html, body, #root {
@@ -21,10 +22,10 @@ html, body, #root {
 }
 
 /* HERO SECTION */
+
 .hero-section {
   width: 100%;              /* FULL screen width */
-  height: 90vh;             /* FULL screen height */
-  min-height: 100vh;
+  height: 75vh;             /* FULL screen height */
   margin: 0;
   padding: 0;
   background-size: cover;
@@ -210,8 +211,8 @@ html, body, #root {
   .hero-section {
     /* height: 100vh;
     min-height: 100vh; */
-      height: var(--hero-height, 100vh);
- min-height: var(--hero-height, 100vh);
+      height: var(--hero-height, 75vh);
+ /* min-height: var(--hero-height, 100vh); */
   }
 
   .hero-overlay {
@@ -607,6 +608,4 @@ html, body, #root {
 
 .app-content {
   flex: 1;
-  padding: 20px;
-  padding-top: 90px;   /* space for fixed header */
 }

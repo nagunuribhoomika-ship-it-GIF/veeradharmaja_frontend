@@ -1,0 +1,81 @@
+body {
+  font-family: 'Droid Serif', serif;
+}
+
+/* HERO SECTION */
+.contact-hero {
+    height: 500px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.contact-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    /* Dark overlay */
+}
+
+.contact-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* INFO CARD */
+.info-card {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    
+}
+
+.info-card h5 {
+    color: #1b2a4e;
+    /* dark navy like screenshot */
+    letter-spacing: 1px;
+    margin-top: 10px;
+    font-family: 'Droid Serif', serif;
+}
+
+.info-card p {
+    color: #000;
+    font-size: 15px;
+    font-family: 'Droid Serif', serif;
+}
+
+
+/* FORM */
+.form-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* BUTTONS */
+.submit-btn {
+    background-color: #7b1e22;
+    border: none;
+    border-radius: 30px;
+}
+
+.submit-btn:hover {
+    background-color: #5a1518;
+}
+
+.cta-btn {
+    background-color: #7b1e22;
+    border: none;
+    border-radius: 30px;
+}
+
+.cta-btn:hover {
+    background-color: #5a1518;
+}
+
+/* CTA SECTION */
+.cta-section h2 {
+    font-size: 32px;
+}
