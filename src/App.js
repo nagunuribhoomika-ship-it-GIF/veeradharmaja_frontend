@@ -16,6 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import EventPage from "./pages/EventPage";
 import EventGallery from "./pages/EventGallery";
 import EventVideos from "./pages/EventVideos";
+import ServiceDetails from "./pages/ServiceDetails";
 
 function App() {
   return (
@@ -34,8 +35,9 @@ function App() {
           {/* Contact */}
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
-<Route path="/services" element={<Services />} />
-<Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/:id" element={<ServiceDetails />} />
+          <Route path="/portfolio" element={<Portfolio />} />
 
 
           {/* Dynamic event pages */}

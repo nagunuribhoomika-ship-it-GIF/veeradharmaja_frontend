@@ -1,0 +1,109 @@
+/* ===== HERO BANNER ===== */
+.service-hero {
+    height: 500px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.service-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    /* Dark overlay */
+}
+
+.service-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-overlay {
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  padding: 60px 0;
+}
+
+.hero-overlay h1 {
+  font-size: 42px;
+  font-weight: 600;
+}
+
+.hero-overlay p {
+  margin-top: 10px;
+}
+
+/* ===== SERVICES SECTION ===== */
+/* ===== SERVICES BACKGROUND ===== */
+.services-section {
+  background: #f5f3ee;
+  padding: 60px 0;
+}
+
+/* ===== CARD CONTAINER ===== */
+.custom-service-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* hover effect */
+.custom-service-card:hover {
+  transform: translateY(-6px);
+}
+
+/* ===== IMAGE STYLE ===== */
+.service-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* ===== TITLE ===== */
+.service-title {
+  margin-top: 18px;
+  font-weight: 500;
+  color: #222;
+}
+
+/* ===== DETAILS IMAGE ===== */
+.details-image {
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* ===== DESCRIPTION ===== */
+.service-description {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* ===== FEATURE LIST ===== */
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  margin-bottom: 12px;
+  padding-left: 25px;
+  position: relative;
+}
+
+/* red circle bullet */
+.feature-list li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #8b1e1e;
+  font-weight: bold;
+}
