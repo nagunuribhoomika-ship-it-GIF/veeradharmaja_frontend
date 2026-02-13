@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import logo from "../assets/hero/logo.png";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,9 +21,11 @@ function Header() {
         </nav>
 
         {/* Profile icon */}
-        <Link to="/profile" className="header-profile desktop-only">
+        {/* <Link to="/profile" className="header-profile desktop-only">
           👤
-        </Link>
+        </Link> */}
+
+  <img src={logo} alt="Company Logo" className="header-logo" />
 
         {/* Mobile hamburger */}
         <button
@@ -43,13 +46,13 @@ function Header() {
             <Link to="/portfolio" onClick={() => setMenuOpen(false)}>Our Portfolio</Link>
             <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link>
 
-            <Link
+            {/* <Link
               to="/profile"
               className="mobile-profile"
               onClick={() => setMenuOpen(false)}
             >
               👤 Profile
-            </Link>
+            </Link> */}
           </nav>
         </div>
       )}

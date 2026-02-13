@@ -54,7 +54,7 @@ function Footer() {
               📍 Godhavarikhani, Telangana
             </p>
             <p className="small mb-2">
-              📞 +91 XXXXX XXXXX
+              📞 +91 9849836691
             </p>
             <p className="small mb-2">
               📧 veeradharmajaevents@gmail.com

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../styles/services.css";
 import bgImage from "../assets/bgimage.jpg"
@@ -66,7 +66,26 @@ const Services = () => {
 
             ))}
           </Row>
-        </Container>
+        </Container> <br/>
+              {/* ===== CTA SECTION ===== */}
+<div className="portfolio-cta-section">
+  <div className="cta-container">
+    <div className="cta-text">
+      <h2>Let’s create the wedding of your dreams together!</h2>
+      <p>
+        Schedule a consultation to discuss your vision and explore our stunning decor options.
+      </p>
+    </div>
+
+    <div className="cta-button">
+ <button onClick={() => navigate("/contact#contact-form")}>
+  Book your consultation today!
+</button>
+
+</div>
+
+  </div>
+</div>
       </div>
     </>
   );

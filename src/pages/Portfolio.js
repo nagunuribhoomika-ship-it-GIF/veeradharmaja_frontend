@@ -1,13 +1,50 @@
-function Portfolio() {
+import Cards from "./Cards";
+import "../styles/Portfolio.css";
+import bgImage from "../assets/bgimage.jpg";   // same image style
+import { useNavigate } from "react-router-dom";
+
+const Portfolio = () => {
+    const navigate = useNavigate();
   return (
-    <div style={{ padding: "120px 40px" }}>
-      <h1>Our Portfolio</h1>
+    <>
+      {/* ===== HERO BANNER ===== */}
+      <div className="portfolio-hero">
+        <section
+          className="portfolio-banner d-flex align-items-center text-center text-white"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+          }}
+        >
+          <div className="container">
+            <h1 className="display-4 fw-bold">Our Portfolio</h1>
+            <p>Home &gt; Our Portfolio</p>
+          </div>
+        </section>
+      </div>
+
+      {/* Cards */}
+      <Cards />
+
+      {/* ===== CTA SECTION ===== */}
+<div className="portfolio-cta-section">
+  <div className="cta-container">
+    <div className="cta-text">
+      <h2>Let’s create the wedding of your dreams together!</h2>
       <p>
-        Explore our past events, celebrations, and memorable moments
-        organized by our team.
+        Schedule a consultation to discuss your vision and explore our stunning decor options.
       </p>
     </div>
+
+    <div className="cta-button">
+      <button onClick={() => navigate("/contact#contact-form")}>
+  Book your consultation today!
+</button>
+    </div>
+  </div>
+</div>
+
+    </>
   );
-}
+};
 
 export default Portfolio;

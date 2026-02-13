@@ -1,0 +1,95 @@
+/* ===== HERO BANNER ===== */
+.portfolio-banner {
+    height: 500px;                 /* same look as services */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* dark overlay on image */
+.portfolio-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+/* text above overlay */
+.portfolio-banner .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* background section */
+.portfolio-page {
+  background: #f6f3ee;
+}
+
+/* ===== CTA SECTION ===== */
+.portfolio-cta-section {
+  /* background: #f5f3ee; */
+  padding: 60px 0;
+  position: relative;
+}
+
+/* Decorative top border */
+.portfolio-cta-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-image: radial-gradient(circle, #8b1e1e 2px, transparent 2px);
+  background-size: 20px 20px;
+  background-repeat: repeat-x;
+}
+
+/* Container layout */
+.cta-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Text */
+.cta-text h2 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.cta-text p {
+  color: #555;
+}
+
+/* Button */
+.cta-button button {
+  background: #7a2c2c;
+  color: #fff;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cta-button button:hover {
+  background: #5a1f1f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cta-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+

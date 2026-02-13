@@ -1,0 +1,113 @@
+/* PAGE BACKGROUND */
+.admin-page {
+  min-height: 100vh;
+  padding: 120px 20px 60px;
+  background: linear-gradient(135deg, #f7f5f3, #efe9e6);
+  display: flex;
+  justify-content: center;
+}
+
+/* CONTAINER */
+.admin-container {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* TITLE */
+.admin-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #3b1f1f;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* CARD */
+.admin-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* STATUS TEXT */
+.admin-status {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+/* BUTTON AREA */
+.admin-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* BUTTONS */
+.admin-btn {
+  padding: 10px 28px;
+  border-radius: 30px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* PRIMARY BUTTON */
+.admin-btn {
+  background: #7b1e22;
+  color: #fff;
+}
+
+.admin-btn:hover {
+  background: #5a1518;
+  transform: translateY(-2px);
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #555;
+}
+
+.logout-btn:hover {
+  background: #333;
+}
+
+/* ENQUIRY SECTION */
+.enquiry-card {
+  margin-top: 30px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.enquiry-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.enquiry-table th {
+  background: #7b1e22;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.enquiry-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.enquiry-table tr:hover {
+  background: #f9f9f9;
+}

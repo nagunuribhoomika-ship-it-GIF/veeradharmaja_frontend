@@ -147,3 +147,9 @@ background: #2b1d18;
   font-weight: 600;
   font-size: 15px;
 }
+.header-logo {
+  height: 35px;
+  width: auto;
+  object-fit: contain;
+   filter: brightness(0) invert(1);
+}

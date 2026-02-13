@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Layout from "./components/Layout";
 
 import Home from "./pages/Home";
@@ -9,18 +8,18 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Portfolio from "./pages/Portfolio";
-
-
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import EventPage from "./pages/EventPage";
 import EventGallery from "./pages/EventGallery";
 import EventVideos from "./pages/EventVideos";
 import ServiceDetails from "./pages/ServiceDetails";
+import KeyboardShortcut from "./components/KeyboardShortcut";
+
 
 function App() {
   return (
     <BrowserRouter>
+    <KeyboardShortcut />
       <Layout>
         <Routes>
           {/* Home */}
