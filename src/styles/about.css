@@ -1,0 +1,58 @@
+/* HERO */
+.hero-banner {
+  height: 320px;
+  background: url("https://images.unsplash.com/photo-1531058020387-3be344556be6")
+    center/cover no-repeat;
+  position: relative;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-banner div {
+  position: relative;
+  z-index: 2;
+}
+
+/* CITY CARDS */
+.city-card {
+  border: none;
+  background: #f7f4ef;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.city-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.city-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.read-more {
+  text-decoration: none;
+  color: #7a4e2d;
+  font-weight: 500;
+}
+
+/* WHY SECTION */
+.why-section {
+  background: #faf7f2;
+}
+
+.feature {
+  margin-bottom: 20px;
+}
+
+/* STORY */
+.story-section {
+  background: #ffffff;
+}
