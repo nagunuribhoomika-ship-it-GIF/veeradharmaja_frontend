@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../styles/ContactUs.css";
 import bgImage from "../assets/bgimage.jpg";
+import { submitContactEnquiry } from "../services/Api";
 
 const Contact = () => {
   // State for form
@@ -26,15 +27,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
+      const data = await submitContactEnquiry(formData);
 
       if (data.success) {
   alert("Enquiry sent successfully!");

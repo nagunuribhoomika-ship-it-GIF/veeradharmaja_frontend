@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
+import {
+  deleteMedia,
+  getEventMedia,
+  getFileUrl,
+  uploadEventMedia
+} from "../services/Api";
 
 function WeddingVideos() {
   const [videos, setVideos] = useState([]);
@@ -9,14 +15,10 @@ function WeddingVideos() {
 
   const isAdmin = !!localStorage.getItem("token");
 
-  // Load videos from backend
   const loadVideos = async () => {
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/media/event/1"
-      );
-      const data = await res.json();
-      setVideos(data.filter((m) => m.type === "video"));
+      const data = await getEventMedia(1);
+      setVideos(data.filter((media) => media.type === "video"));
     } catch (err) {
       console.error("Error loading videos", err);
     }
@@ -26,22 +28,11 @@ function WeddingVideos() {
     loadVideos();
   }, []);
 
-  // Upload video (admin only)
   const handleUpload = async () => {
     if (!selectedFile) return;
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
     try {
-      await fetch("http://localhost:5000/api/media/upload/1", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-        body: formData
-      });
-
+      await uploadEventMedia(1, selectedFile);
       setSelectedFile(null);
       loadVideos();
     } catch (err) {
@@ -49,25 +40,17 @@ function WeddingVideos() {
     }
   };
 
-  // Delete video (soft delete)
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this video?")) return;
 
     try {
-      await fetch(`http://localhost:5000/api/media/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-
-      setVideos((prev) => prev.filter((v) => v.id !== id));
+      await deleteMedia(id);
+      setVideos((prev) => prev.filter((video) => video.id !== id));
     } catch (err) {
       console.error("Delete failed", err);
     }
   };
 
-  // Swipe handlers
   const handlers = useSwipeable({
     onSwipedLeft: () => {
       setCurrentIndex((prev) =>
@@ -75,9 +58,7 @@ function WeddingVideos() {
       );
     },
     onSwipedRight: () => {
-      setCurrentIndex((prev) =>
-        prev > 0 ? prev - 1 : prev
-      );
+      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
     },
     preventScrollOnSwipe: true,
     trackMouse: true
@@ -86,12 +67,11 @@ function WeddingVideos() {
   return (
     <div style={styles.page}>
       <Link to="/wedding" style={styles.back}>
-        ← Back to Wedding
+        â† Back to Wedding
       </Link>
 
       <h1 style={styles.title}>Wedding Videos</h1>
 
-      {/* ADMIN UPLOAD */}
       {isAdmin && (
         <div style={{ marginBottom: "20px" }}>
           <input
@@ -109,25 +89,20 @@ function WeddingVideos() {
         </div>
       )}
 
-      {/* VIDEO GRID */}
       <div style={styles.grid}>
         {videos.map((vid, i) => (
-          <div
-            key={vid.id}
-            style={{ position: "relative" }}
-          >
-            {/* DELETE (ADMIN ONLY) */}
+          <div key={vid.id} style={{ position: "relative" }}>
             {isAdmin && (
               <button
                 onClick={() => handleDelete(vid.id)}
                 style={styles.deleteBtn}
               >
-                ✕
+                âœ•
               </button>
             )}
 
             <video
-              src={`http://localhost:5000${vid.file_path}`}
+              src={getFileUrl(vid.file_path)}
               style={styles.thumbnail}
               onClick={() => setCurrentIndex(i)}
               muted
@@ -136,19 +111,18 @@ function WeddingVideos() {
         ))}
       </div>
 
-      {/* FULL SCREEN VIDEO */}
       {currentIndex !== null && (
         <div style={styles.overlay}>
           <span
             style={styles.close}
             onClick={() => setCurrentIndex(null)}
           >
-            ✕
+            âœ•
           </span>
 
           <div {...handlers}>
             <video
-              src={`http://localhost:5000${videos[currentIndex].file_path}`}
+              src={getFileUrl(videos[currentIndex].file_path)}
               controls
               autoPlay
               style={styles.fullVideo}

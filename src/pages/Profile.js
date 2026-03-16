@@ -3,6 +3,7 @@ import LoginModal from "../components/LoginModal";
 import "../styles/admin.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAdminEnquiries } from "../services/Api";
 
 
 
@@ -30,8 +31,7 @@ function Profile() {
   // Load enquiries from backend
   const loadEnquiries = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/admin/enquiries");
-      const data = await res.json();
+      const data = await getAdminEnquiries();
       setEnquiries(data);
       setShowEnquiries(true);
     } catch (err) {

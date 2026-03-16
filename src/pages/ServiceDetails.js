@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/services.css";
 import bgImage from "../assets/bgimage.jpg"
+import { getFileUrl, getServiceById } from "../services/Api";
 
 const ServiceDetails = () => {
     const { id } = useParams();
@@ -14,10 +15,7 @@ const ServiceDetails = () => {
 
     const fetchService = async () => {
         try {
-            const res = await fetch(
-                `http://localhost:5000/api/services/${id}`
-            );
-            const data = await res.json();
+            const data = await getServiceById(id);
             setService(data);
         } catch (err) {
             console.log(err);
@@ -53,7 +51,7 @@ const ServiceDetails = () => {
                         {/* LEFT IMAGE */}
                         <Col md={6}>
                             <img
-                                src={`http://localhost:5000/${service.image}`}
+                                src={getFileUrl(service.image)}
                                 alt={service.title}
                                 className="details-image"
                             />

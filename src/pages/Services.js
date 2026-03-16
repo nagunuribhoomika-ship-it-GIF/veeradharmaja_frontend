@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../styles/services.css";
 import bgImage from "../assets/bgimage.jpg"
+import { getFileUrl, getServices } from "../services/Api";
 
 
 const Services = () => {
@@ -15,8 +16,7 @@ const Services = () => {
 
   const fetchServices = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/services");
-      const data = await res.json();
+      const data = await getServices();
       setServices(data);
     } catch (err) {
       console.log(err);
@@ -55,7 +55,7 @@ const Services = () => {
                   onClick={() => navigate(`/services/${service.id}`)}
                 >
                   <img
-                    src={`http://localhost:5000/${service.image}`}
+                    src={getFileUrl(service.image)}
                     alt={service.title}
                     className="service-image"
                   />

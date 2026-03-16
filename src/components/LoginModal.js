@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { loginAdmin } from "../services/Api";
 
 function LoginModal({ onClose, onLogin }) {
   const [username, setUsername] = useState("");
@@ -9,24 +10,13 @@ function LoginModal({ onClose, onLogin }) {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-        return;
-      }
+      const data = await loginAdmin({ username, password });
 
       localStorage.setItem("token", data.token);
       onLogin();
       onClose();
-    } catch {
-      setError("Server error");
+    } catch (error) {
+      setError(error.data?.message || "Server error");
     }
   };
 

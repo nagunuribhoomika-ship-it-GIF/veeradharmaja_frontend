@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
+import {
+  deleteMedia,
+  getEventMedia,
+  getFileUrl,
+  uploadEventMedia
+} from "../services/Api";
 
 function WeddingGallery() {
   const [images, setImages] = useState([]);
@@ -9,14 +15,10 @@ function WeddingGallery() {
 
   const isAdmin = !!localStorage.getItem("token");
 
-  // Fetch images
   const loadImages = async () => {
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/media/event/1"
-      );
-      const data = await res.json();
-      setImages(data.filter((m) => m.type === "image"));
+      const data = await getEventMedia(1);
+      setImages(data.filter((media) => media.type === "image"));
     } catch (err) {
       console.error("Error loading images", err);
     }
@@ -26,22 +28,11 @@ function WeddingGallery() {
     loadImages();
   }, []);
 
-  // Upload image
   const handleUpload = async () => {
     if (!selectedFile) return;
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
     try {
-      await fetch("http://localhost:5000/api/media/upload/1", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-        body: formData
-      });
-
+      await uploadEventMedia(1, selectedFile);
       setSelectedFile(null);
       loadImages();
     } catch (err) {
@@ -49,26 +40,17 @@ function WeddingGallery() {
     }
   };
 
-  // Delete image (soft delete)
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this image?")) return;
 
     try {
-      await fetch(`http://localhost:5000/api/media/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-
-      // Update UI immediately
+      await deleteMedia(id);
       setImages((prev) => prev.filter((img) => img.id !== id));
     } catch (err) {
       console.error("Delete failed", err);
     }
   };
 
-  // Swipe handlers
   const handlers = useSwipeable({
     onSwipedLeft: () => {
       setCurrentIndex((prev) =>
@@ -76,9 +58,7 @@ function WeddingGallery() {
       );
     },
     onSwipedRight: () => {
-      setCurrentIndex((prev) =>
-        prev > 0 ? prev - 1 : prev
-      );
+      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
     },
     preventScrollOnSwipe: true,
     trackMouse: true
@@ -87,12 +67,11 @@ function WeddingGallery() {
   return (
     <div style={styles.page}>
       <Link to="/wedding" style={styles.back}>
-        ← Back to Wedding
+        â† Back to Wedding
       </Link>
 
       <h1 style={styles.title}>Wedding Photo Gallery</h1>
 
-      {/* ADMIN UPLOAD */}
       {isAdmin && (
         <div style={{ marginBottom: "20px" }}>
           <input
@@ -110,25 +89,20 @@ function WeddingGallery() {
         </div>
       )}
 
-      {/* IMAGE GRID */}
       <div style={styles.grid}>
         {images.map((img, i) => (
-          <div
-            key={img.id}
-            style={{ position: "relative" }}
-          >
-            {/* DELETE BUTTON (ADMIN ONLY) */}
+          <div key={img.id} style={{ position: "relative" }}>
             {isAdmin && (
               <button
                 onClick={() => handleDelete(img.id)}
                 style={styles.deleteBtn}
               >
-                ✕
+                âœ•
               </button>
             )}
 
             <img
-              src={`http://localhost:5000${img.file_path}`}
+              src={getFileUrl(img.file_path)}
               alt="wedding"
               style={styles.image}
               onClick={() => setCurrentIndex(i)}
@@ -137,19 +111,18 @@ function WeddingGallery() {
         ))}
       </div>
 
-      {/* LIGHTBOX */}
       {currentIndex !== null && (
         <div style={styles.overlay}>
           <span
             style={styles.close}
             onClick={() => setCurrentIndex(null)}
           >
-            ✕
+            âœ•
           </span>
 
           <div {...handlers}>
             <img
-              src={`http://localhost:5000${images[currentIndex].file_path}`}
+              src={getFileUrl(images[currentIndex].file_path)}
               alt="full view"
               style={styles.fullImage}
             />

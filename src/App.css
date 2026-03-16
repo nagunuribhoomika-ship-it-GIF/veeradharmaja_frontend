@@ -115,15 +115,17 @@ html, body, #root {
 /* HOME PAGE BACKGROUND DESIGN */
 /* ============================= */
 
-/* .home-page {
-  /* background: 
+/*
+.home-page {
+  background:
     linear-gradient(
       180deg,
       #ffffff 0%,
       #faf7f2 40%,
       #f3efe8 100%
-    ); */
- */
+    );
+}
+*/
 
 .home-page {
   position: relative;

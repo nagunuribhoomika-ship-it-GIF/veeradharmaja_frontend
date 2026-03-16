@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getEventBySlug, getFileUrl } from "../services/Api";
 
 function EventPage() {
   const { slug } = useParams();
@@ -7,8 +8,7 @@ function EventPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/events/slug/${slug}`)
-      .then((res) => res.json())
+    getEventBySlug(slug)
       .then((data) => {
         setEvent(data);
         setLoading(false);
@@ -46,7 +46,7 @@ function EventPage() {
   style={{
     ...styles.mediaCard,
     ...(firstGalleryImage && {
-      backgroundImage: `url(http://localhost:5000${firstGalleryImage.file_path})`,
+      backgroundImage: `url(${getFileUrl(firstGalleryImage.file_path)})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       color: "#1f2937",
