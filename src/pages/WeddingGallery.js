@@ -67,7 +67,7 @@ function WeddingGallery() {
   return (
     <div style={styles.page}>
       <Link to="/wedding" style={styles.back}>
-        â† Back to Wedding
+        {"< Back to Wedding"}
       </Link>
 
       <h1 style={styles.title}>Wedding Photo Gallery</h1>
@@ -96,8 +96,9 @@ function WeddingGallery() {
               <button
                 onClick={() => handleDelete(img.id)}
                 style={styles.deleteBtn}
+                aria-label="Delete image"
               >
-                âœ•
+                X
               </button>
             )}
 
@@ -116,8 +117,10 @@ function WeddingGallery() {
           <span
             style={styles.close}
             onClick={() => setCurrentIndex(null)}
+            role="button"
+            aria-label="Close preview"
           >
-            âœ•
+            X
           </span>
 
           <div {...handlers}>

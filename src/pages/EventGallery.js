@@ -83,7 +83,8 @@ function EventGallery() {
   return (
     <div style={styles.page}>
       <Link to={`/event/${slug}`} style={styles.back}>
-        â† Back to {eventName}
+        {"< Back to "}
+        {eventName}
       </Link>
 
       <h1 style={styles.title}>{eventName} Photo Gallery</h1>
@@ -112,8 +113,9 @@ function EventGallery() {
               <button
                 onClick={() => handleDelete(img.id)}
                 style={styles.deleteBtn}
+                aria-label="Delete image"
               >
-                âœ•
+                X
               </button>
             )}
 
@@ -132,13 +134,15 @@ function EventGallery() {
           <span
             style={styles.close}
             onClick={() => setCurrentIndex(null)}
+            role="button"
+            aria-label="Close preview"
           >
-            âœ•
+            X
           </span>
 
           {!isMobile && (
             <button style={styles.navLeft} onClick={showPrev}>
-              â€¹
+              {"<"}
             </button>
           )}
 
@@ -152,7 +156,7 @@ function EventGallery() {
 
           {!isMobile && (
             <button style={styles.navRight} onClick={showNext}>
-              â€º
+              {">"}
             </button>
           )}
         </div>

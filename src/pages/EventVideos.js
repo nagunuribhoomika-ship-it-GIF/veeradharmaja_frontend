@@ -83,7 +83,8 @@ function EventVideos() {
   return (
     <div style={styles.page}>
       <Link to={`/event/${slug}`} style={styles.back}>
-        â† Back to {eventName}
+        {"< Back to "}
+        {eventName}
       </Link>
 
       <h1 style={styles.title}>{eventName} Videos</h1>
@@ -112,8 +113,9 @@ function EventVideos() {
               <button
                 onClick={() => handleDelete(vid.id)}
                 style={styles.deleteBtn}
+                aria-label="Delete video"
               >
-                âœ•
+                X
               </button>
             )}
 
@@ -132,13 +134,15 @@ function EventVideos() {
           <span
             style={styles.close}
             onClick={() => setCurrentIndex(null)}
+            role="button"
+            aria-label="Close preview"
           >
-            âœ•
+            X
           </span>
 
           {!isMobile && (
             <button style={styles.navLeft} onClick={showPrev}>
-              â€¹
+              {"<"}
             </button>
           )}
 
@@ -153,7 +157,7 @@ function EventVideos() {
 
           {!isMobile && (
             <button style={styles.navRight} onClick={showNext}>
-              â€º
+              {">"}
             </button>
           )}
         </div>

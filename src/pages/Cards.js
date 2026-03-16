@@ -77,9 +77,7 @@ function Cards() {
       {isAdmin && (
         <div className="admin-add">
           {!showAdd ? (
-            <button onClick={() => setShowAdd(true)}>
-              Add Event
-            </button>
+            <button onClick={() => setShowAdd(true)}>Add Event</button>
           ) : (
             <div className="admin-form">
               <input
@@ -109,8 +107,9 @@ function Cards() {
                 onClick={() => handleDeleteEvent(event.id)}
                 className="delete-btn"
                 title="Delete event"
+                aria-label="Delete event"
               >
-                âœ•
+                X
               </button>
             )}
 
