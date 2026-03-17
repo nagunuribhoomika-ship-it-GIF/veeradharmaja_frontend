@@ -1,6 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
+import { CartContext } from "../context/CartContext";
+
 import {
   deleteMedia,
   getEventBySlug,
@@ -10,6 +12,7 @@ import {
 } from "../services/Api";
 
 function EventVideos() {
+
   const { slug } = useParams();
 
   const [eventId, setEventId] = useState(null);
@@ -17,8 +20,10 @@ function EventVideos() {
   const [videos, setVideos] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const isMobile = window.innerWidth <= 768;
 
+  const { cart, addToCart } = useContext(CartContext);
+
+  const isMobile = window.innerWidth <= 768;
   const isAdmin = !!localStorage.getItem("token");
 
   useEffect(() => {
@@ -31,6 +36,7 @@ function EventVideos() {
   }, [slug]);
 
   const loadVideos = useCallback(async () => {
+
     if (!eventId) return;
 
     try {
@@ -39,6 +45,7 @@ function EventVideos() {
     } catch (err) {
       console.error("Error loading videos", err);
     }
+
   }, [eventId]);
 
   useEffect(() => {
@@ -46,28 +53,40 @@ function EventVideos() {
   }, [eventId, loadVideos]);
 
   const handleUpload = async () => {
+
     if (!selectedFile || !eventId) return;
 
     await uploadEventMedia(eventId, selectedFile);
     setSelectedFile(null);
     loadVideos();
+
   };
 
   const handleDelete = async (id) => {
+
     if (!window.confirm("Delete this video?")) return;
 
     await deleteMedia(id);
-    setVideos((prev) => prev.filter((video) => video.id !== id));
+    setVideos((prev) =>
+      prev.filter((video) => video.id !== id)
+    );
+
   };
 
   const handlers = useSwipeable({
+
     onSwipedLeft: () =>
       setCurrentIndex((prev) =>
         prev < videos.length - 1 ? prev + 1 : prev
       ),
+
     onSwipedRight: () =>
-      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev)),
+      setCurrentIndex((prev) =>
+        prev > 0 ? prev - 1 : prev
+      ),
+
     trackMouse: true
+
   });
 
   const showNext = () => {
@@ -77,25 +96,34 @@ function EventVideos() {
   };
 
   const showPrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    setCurrentIndex((prev) =>
+      prev > 0 ? prev - 1 : prev
+    );
   };
 
   return (
+
     <div style={styles.page}>
+
       <Link to={`/event/${slug}`} style={styles.back}>
         {"< Back to "}
         {eventName}
       </Link>
 
-      <h1 style={styles.title}>{eventName} Videos</h1>
+      <h1 style={styles.title}>
+        {eventName} Videos
+      </h1>
 
       {isAdmin && (
+
         <div style={{ marginBottom: "20px" }}>
+
           <input
             type="file"
             accept="video/*"
             onChange={(e) => setSelectedFile(e.target.files[0])}
           />
+
           <button
             onClick={handleUpload}
             disabled={!selectedFile}
@@ -103,17 +131,25 @@ function EventVideos() {
           >
             Upload Video
           </button>
+
         </div>
+
       )}
 
       <div style={styles.grid}>
-        {videos.map((vid, i) => (
+
+        {videos.map((vid, i) => {
+
+          const isSelected = cart.some((item) => item.id === vid.id);
+
+          return (
+
           <div key={vid.id} style={{ position: "relative" }}>
+
             {isAdmin && (
               <button
                 onClick={() => handleDelete(vid.id)}
                 style={styles.deleteBtn}
-                aria-label="Delete video"
               >
                 X
               </button>
@@ -125,17 +161,42 @@ function EventVideos() {
               onClick={() => setCurrentIndex(i)}
               muted
             />
+
+            <button
+              style={{
+                ...styles.cartBtn,
+                ...(isSelected ? styles.cartBtnSelected : {})
+              }}
+              onClick={() => {
+                if (isSelected) return;
+
+                addToCart({
+                  id: vid.id,
+                  file: vid.file_path,
+                  event: eventName,
+                  mediaType: "video"
+                });
+              }}
+              disabled={isSelected}
+            >
+              {isSelected ? "Selected" : "Add to Cart"}
+            </button>
+
           </div>
-        ))}
+
+          );
+
+        })}
+
       </div>
 
       {currentIndex !== null && (
+
         <div style={styles.overlay}>
+
           <span
             style={styles.close}
             onClick={() => setCurrentIndex(null)}
-            role="button"
-            aria-label="Close preview"
           >
             X
           </span>
@@ -147,12 +208,14 @@ function EventVideos() {
           )}
 
           <div {...handlers}>
+
             <video
               src={getFileUrl(videos[currentIndex].file_path)}
               controls
               autoPlay
               style={styles.fullVideo}
             />
+
           </div>
 
           {!isMobile && (
@@ -160,34 +223,44 @@ function EventVideos() {
               {">"}
             </button>
           )}
+
         </div>
+
       )}
+
     </div>
+
   );
+
 }
 
 const styles = {
+
   page: {
     padding: "30px",
     paddingTop: "120px",
     maxWidth: "1100px",
     margin: "auto"
   },
+
   back: {
     textDecoration: "none",
     color: "#667eea",
     fontWeight: "500"
   },
+
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
     gap: "20px"
   },
+
   thumbnail: {
     width: "100%",
     borderRadius: "10px",
     cursor: "pointer"
   },
+
   deleteBtn: {
     position: "absolute",
     top: "8px",
@@ -201,21 +274,24 @@ const styles = {
     cursor: "pointer",
     zIndex: 2
   },
+
   overlay: {
     position: "fixed",
     inset: 0,
-    background: "rgba(255, 255, 255, 0.85)",
+    background: "rgba(255,255,255,0.85)",
     backdropFilter: "blur(6px)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     zIndex: 9999
   },
+
   fullVideo: {
     width: "85vw",
     height: "85vh",
     borderRadius: "12px"
   },
+
   close: {
     position: "absolute",
     top: "20px",
@@ -225,6 +301,7 @@ const styles = {
     cursor: "pointer",
     zIndex: 10000
   },
+
   title: {
     textAlign: "center",
     marginBottom: "30px",
@@ -234,24 +311,41 @@ const styles = {
     fontFamily: `"Playfair Display", serif`,
     color: "#2f1f1f"
   },
+
   navLeft: {
     position: "absolute",
     left: "30px",
-    color: "#161515",
     fontSize: "50px",
     background: "none",
     border: "none",
     cursor: "pointer"
   },
+
   navRight: {
     position: "absolute",
     right: "30px",
-    color: "#080808",
     fontSize: "50px",
     background: "none",
     border: "none",
     cursor: "pointer"
+  },
+
+  cartBtn: {
+    marginTop: "8px",
+    width: "100%",
+    background: "#d4af37",
+    color: "#fff",
+    border: "none",
+    padding: "6px",
+    borderRadius: "6px",
+    cursor: "pointer"
+  },
+
+  cartBtnSelected: {
+    background: "#2f855a",
+    cursor: "default"
   }
+
 };
 
 export default EventVideos;

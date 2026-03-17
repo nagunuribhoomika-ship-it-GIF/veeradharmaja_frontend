@@ -37,6 +37,7 @@ background: #2b1d18;
   font-weight: 500;
   margin-left: 20px;
 }
+
 /* VISIBILITY CONTROL */
 .desktop-only {
   display: flex;
@@ -114,16 +115,29 @@ background: #2b1d18;
   color: #ffffff;
 }
 .mobile-menu {
-  position: absolute;
-  top: 100%;      /* now correctly below header */
+  position: fixed;
+  top: 72px;
   right: 20px;
-
   background: #f3f6f4;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   padding: 15px 20px;
   width: 200px;
   z-index: 1100;
+}
+
+.mobile-menu-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1090;
+}
+
+.mobile-menu-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
 }
 
 
@@ -147,6 +161,7 @@ background: #2b1d18;
   font-weight: 600;
   font-size: 15px;
 }
+
 .header-logo {
   height: 35px;
   width: auto;

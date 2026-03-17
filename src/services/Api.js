@@ -1,7 +1,16 @@
 import { getAuthHeaders } from "./auth";
 
+const getDefaultApiBaseUrl = () => {
+  if (typeof window === "undefined") {
+    return "http://localhost:5000";
+  }
+
+  const { protocol, hostname } = window.location;
+  return `${protocol}//${hostname}:5000`;
+};
+
 const rawBaseUrl =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+  process.env.REACT_APP_API_BASE_URL || getDefaultApiBaseUrl();
 
 export const API_BASE_URL = rawBaseUrl.replace(/\/+$/, "");
 

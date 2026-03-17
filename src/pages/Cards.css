@@ -1,0 +1,227 @@
+.cards-section {
+  padding: 56px 32px 20px;
+}
+
+.cards-grid {
+  display: grid;
+   grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 34px;
+}
+
+.card-wrapper {
+  position: relative;
+}
+
+.card-wrapper input[type="file"] {
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 1px dashed rgba(107, 44, 44, 0.28);
+  border-radius: 14px;
+  background: rgba(255, 252, 248, 0.78);
+  backdrop-filter: blur(6px);
+}
+
+.delete-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(120, 18, 18, 0.92);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 10px 24px rgba(120, 18, 18, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.08);
+  background: #991b1b;
+}
+
+.admin-add {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.admin-add button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #7c2d12, #c2410c);
+  box-shadow: 0 14px 30px rgba(124, 45, 18, 0.22);
+  cursor: pointer;
+}
+
+.admin-form {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.admin-form input {
+  min-width: 180px;
+  padding: 10px 14px;
+  border: 1px solid rgba(107, 44, 44, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.admin-form button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.event-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 252, 248, 0.96);
+  box-shadow: 0 18px 38px rgba(83, 55, 37, 0.12);
+  border: 1px solid rgba(208, 188, 166, 0.42);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(83, 55, 37, 0.18);
+  border-color: rgba(156, 120, 83, 0.5);
+}
+
+.event-card-image {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  aspect-ratio: 4 / 4.2;
+}
+
+.event-card-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(22, 14, 10, 0.02) 0%,
+      rgba(22, 14, 10, 0.06) 35%,
+      rgba(22, 14, 10, 0.18) 68%,
+      rgba(22, 14, 10, 0.3) 100%
+    );
+  z-index: 1;
+}
+
+.event-card-image::after {
+  content: "";
+  position: absolute;
+  inset: auto 18px 18px 18px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0)
+  );
+  z-index: 2;
+}
+
+.event-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.001);
+  transition: transform 0.55s ease;
+}
+
+.event-card:hover .event-card-image img {
+  transform: scale(1.06);
+}
+
+.event-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 20px 20px;
+}
+
+.event-card-overlay h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.02;
+  text-align: left;
+  letter-spacing: -0.035em;
+  text-transform: capitalize;
+  text-shadow: 0 12px 30px rgba(0, 0, 0, 0.38);
+}
+
+@media (max-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-section {
+    padding: 36px 18px 10px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .card-wrapper input[type="file"] {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .delete-btn {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .event-card {
+    border-radius: 10px;
+  }
+
+  .event-card-image::after {
+    inset: auto 14px 14px 14px;
+  }
+
+  .event-card-overlay {
+    padding: 0 14px 14px;
+  }
+
+  .event-card-overlay h3 {
+    font-size: 18px;
+    line-height: 1.06;
+  }
+  
+}

@@ -7,6 +7,7 @@ import {
   getFileUrl,
   uploadEventMedia
 } from "../services/Api";
+import "./Cards.css";
 
 function Cards() {
   const [events, setEvents] = useState([]);
@@ -123,12 +124,13 @@ function Cards() {
               />
             )}
 
-            <EventCard
-              title={event.name}
-              description={`Creating joyful ${event.name.toLowerCase()} celebrations with elegant themes and seamless arrangements.`}
-              link={`/event/${event.slug}`}
-              image={event.cover_image ? getFileUrl(event.cover_image) : null}
-            />
+           <EventCard
+  title={event.name}
+  link={`/event/${event.slug}`}
+  image={event.cover_image ? getFileUrl(event.cover_image) : null}
+/>
+
+
           </div>
         ))}
       </div>
