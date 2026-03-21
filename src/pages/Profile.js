@@ -4,6 +4,7 @@ import "../styles/admin.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAdminEnquiries } from "../services/Api";
+import { clearAdminToken, isAdminLoggedIn, subscribeToAdminAuth } from "../services/auth";
 
 
 
@@ -16,12 +17,15 @@ function Profile() {
   const [enquiries, setEnquiries] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) setIsAdmin(true);
+    setIsAdmin(isAdminLoggedIn());
+
+    return subscribeToAdminAuth(() => {
+      setIsAdmin(isAdminLoggedIn());
+    });
   }, []);
 
   const handleLogout = () => {
-  localStorage.removeItem("token");
+  clearAdminToken();
   setIsAdmin(false);
   setShowEnquiries(false);
   toast.info("Logged out successfully");

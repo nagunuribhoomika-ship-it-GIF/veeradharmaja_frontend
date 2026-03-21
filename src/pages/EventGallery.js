@@ -10,6 +10,7 @@ import {
   getFileUrl,
   uploadEventMedia
 } from "../services/Api";
+import "./EventMedia.css";
 
 function EventGallery() {
 
@@ -98,23 +99,26 @@ function EventGallery() {
   };
 
   return (
-
-    <div style={styles.page}>
-
-      <Link to={`/event/${slug}`} style={styles.back}>
+    <div className="event-media-page">
+      <div className="event-media-shell">
+        <div className="event-media-header">
+          <Link to={`/event/${slug}`} className="event-media-back">
         {"< Back to "}
         {eventName}
       </Link>
 
-      <h1 style={styles.title}>
+          <h1 className="event-media-title">
         {eventName} Photo Gallery
       </h1>
+          <p className="event-media-subtitle">
+            Browse the full gallery and add your favorite moments to the cart.
+          </p>
+        </div>
 
       {isAdmin && (
-
-        <div style={{ marginBottom: "20px" }}>
-
+        <div className="event-media-admin">
           <input
+            className="event-media-file"
             type="file"
             accept="image/*"
             onChange={(e) => setSelectedFile(e.target.files[0])}
@@ -123,16 +127,14 @@ function EventGallery() {
           <button
             onClick={handleUpload}
             disabled={!selectedFile}
-            style={{ marginLeft: "10px" }}
+            className="event-media-upload"
           >
             Upload Image
           </button>
-
         </div>
-
       )}
 
-      <div style={styles.grid}>
+        <div className="event-media-grid">
 
         {images.map((img, i) => {
 
@@ -140,31 +142,26 @@ function EventGallery() {
 
           return (
 
-          <div key={img.id} style={{ position: "relative" }}>
+          <div key={img.id} className="event-media-card">
 
             {isAdmin && (
-
               <button
                 onClick={() => handleDelete(img.id)}
-                style={styles.deleteBtn}
+                className="event-media-delete"
               >
                 X
               </button>
-
             )}
 
             <img
               src={getFileUrl(img.file_path)}
               alt={`${eventName} item ${i + 1}`}
-              style={styles.image}
+              className="event-media-thumb event-media-thumb--image"
               onClick={() => setCurrentIndex(i)}
             />
 
             <button
-              style={{
-                ...styles.cartBtn,
-                ...(isSelected ? styles.cartBtnSelected : {})
-              }}
+              className={`event-media-cart${isSelected ? " is-selected" : ""}`}
               onClick={() => {
                 if (isSelected) return;
 
@@ -186,162 +183,38 @@ function EventGallery() {
 
         })}
 
-      </div>
+        </div>
 
       {currentIndex !== null && (
-
-        <div style={styles.overlay}>
-
-          <span
-            style={styles.close}
-            onClick={() => setCurrentIndex(null)}
-          >
+        <div className="event-media-overlay">
+          <span className="event-media-close" onClick={() => setCurrentIndex(null)}>
             X
           </span>
 
           {!isMobile && (
-            <button style={styles.navLeft} onClick={showPrev}>
+            <button className="event-media-nav event-media-nav--left" onClick={showPrev}>
               {"<"}
             </button>
           )}
 
-          <div {...handlers} style={styles.zoomContainer}>
-
+          <div {...handlers} className="event-media-viewer event-media-viewer--image">
             <img
               src={getFileUrl(images[currentIndex].file_path)}
               alt="Full view"
-              style={styles.fullImage}
+              className="event-media-full-image"
             />
-
           </div>
 
           {!isMobile && (
-            <button style={styles.navRight} onClick={showNext}>
+            <button className="event-media-nav event-media-nav--right" onClick={showNext}>
               {">"}
             </button>
           )}
-
         </div>
-
       )}
-
+      </div>
     </div>
-
   );
-
 }
-
-const styles = {
-
-  page: {
-    padding: "30px",
-    paddingTop: "120px",
-    maxWidth: "1100px",
-    margin: "auto"
-  },
-
-  back: {
-    textDecoration: "none",
-    color: "#667eea"
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "20px"
-  },
-
-  image: {
-    width: "100%",
-    height: "200px",
-    objectFit: "cover",
-    borderRadius: "10px",
-    cursor: "pointer"
-  },
-
-  deleteBtn: {
-    position: "absolute",
-    top: "8px",
-    right: "8px",
-    background: "red",
-    color: "#fff",
-    borderRadius: "50%",
-    border: "none"
-  },
-
-  overlay: {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(255, 255, 255, 0.85)",
-    backdropFilter: "blur(6px)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 9999
-  },
-
-  fullImage: {
-    width: "85vw",
-    height: "85vh",
-    objectFit: "contain"
-  },
-
-  close: {
-    position: "absolute",
-    top: "20px",
-    right: "25px",
-    fontSize: "36px",
-    cursor: "pointer"
-  },
-
-  navLeft: {
-    position: "absolute",
-    left: "30px",
-    fontSize: "50px",
-    background: "none",
-    border: "none",
-    cursor: "pointer"
-  },
-
-  navRight: {
-    position: "absolute",
-    right: "30px",
-    fontSize: "50px",
-    background: "none",
-    border: "none",
-    cursor: "pointer"
-  },
-
-  title: {
-    textAlign: "center",
-    marginBottom: "30px",
-    fontSize: "36px",
-    fontWeight: "700"
-  },
-
-  zoomContainer: {
-    maxWidth: "100%",
-    maxHeight: "100%",
-    overflow: "auto",
-    touchAction: "pinch-zoom"
-  },
-
-  cartBtn: {
-    marginTop: "8px",
-    width: "100%",
-    background: "#d4af37",
-    color: "#fff",
-    border: "none",
-    padding: "6px",
-    borderRadius: "6px",
-    cursor: "pointer"
-  },
-
-  cartBtnSelected: {
-    background: "#2f855a",
-    cursor: "default"
-  }
-
-};
 
 export default EventGallery;

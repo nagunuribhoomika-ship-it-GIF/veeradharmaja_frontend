@@ -10,6 +10,7 @@ import {
   getFileUrl,
   uploadEventMedia
 } from "../services/Api";
+import "./EventMedia.css";
 
 function EventVideos() {
 
@@ -102,23 +103,27 @@ function EventVideos() {
   };
 
   return (
-
-    <div style={styles.page}>
-
-      <Link to={`/event/${slug}`} style={styles.back}>
+    <div className="event-media-page">
+      <div className="event-media-shell">
+        <div className="event-media-header">
+          <Link to={`/event/${slug}`} className="event-media-back">
         {"< Back to "}
         {eventName}
       </Link>
 
-      <h1 style={styles.title}>
+          <h1 className="event-media-title">
         {eventName} Videos
       </h1>
+          <p className="event-media-subtitle">
+            Explore the event video collection and save the clips you want to
+            include in your order.
+          </p>
+        </div>
 
       {isAdmin && (
-
-        <div style={{ marginBottom: "20px" }}>
-
+        <div className="event-media-admin">
           <input
+            className="event-media-file"
             type="file"
             accept="video/*"
             onChange={(e) => setSelectedFile(e.target.files[0])}
@@ -127,16 +132,14 @@ function EventVideos() {
           <button
             onClick={handleUpload}
             disabled={!selectedFile}
-            style={{ marginLeft: "10px" }}
+            className="event-media-upload"
           >
             Upload Video
           </button>
-
         </div>
-
       )}
 
-      <div style={styles.grid}>
+        <div className="event-media-grid event-media-grid--video">
 
         {videos.map((vid, i) => {
 
@@ -144,12 +147,12 @@ function EventVideos() {
 
           return (
 
-          <div key={vid.id} style={{ position: "relative" }}>
+          <div key={vid.id} className="event-media-card event-media-card--video">
 
             {isAdmin && (
               <button
                 onClick={() => handleDelete(vid.id)}
-                style={styles.deleteBtn}
+                className="event-media-delete"
               >
                 X
               </button>
@@ -157,16 +160,13 @@ function EventVideos() {
 
             <video
               src={getFileUrl(vid.file_path)}
-              style={styles.thumbnail}
+              className="event-media-thumb event-media-thumb--video"
               onClick={() => setCurrentIndex(i)}
               muted
             />
 
             <button
-              style={{
-                ...styles.cartBtn,
-                ...(isSelected ? styles.cartBtnSelected : {})
-              }}
+              className={`event-media-cart${isSelected ? " is-selected" : ""}`}
               onClick={() => {
                 if (isSelected) return;
 
@@ -188,164 +188,39 @@ function EventVideos() {
 
         })}
 
-      </div>
+        </div>
 
       {currentIndex !== null && (
-
-        <div style={styles.overlay}>
-
-          <span
-            style={styles.close}
-            onClick={() => setCurrentIndex(null)}
-          >
+        <div className="event-media-overlay">
+          <span className="event-media-close" onClick={() => setCurrentIndex(null)}>
             X
           </span>
 
           {!isMobile && (
-            <button style={styles.navLeft} onClick={showPrev}>
+            <button className="event-media-nav event-media-nav--left" onClick={showPrev}>
               {"<"}
             </button>
           )}
 
-          <div {...handlers}>
-
+          <div {...handlers} className="event-media-viewer event-media-viewer--video">
             <video
               src={getFileUrl(videos[currentIndex].file_path)}
               controls
               autoPlay
-              style={styles.fullVideo}
+              className="event-media-full-video"
             />
-
           </div>
 
           {!isMobile && (
-            <button style={styles.navRight} onClick={showNext}>
+            <button className="event-media-nav event-media-nav--right" onClick={showNext}>
               {">"}
             </button>
           )}
-
         </div>
-
       )}
-
+      </div>
     </div>
-
   );
-
 }
-
-const styles = {
-
-  page: {
-    padding: "30px",
-    paddingTop: "120px",
-    maxWidth: "1100px",
-    margin: "auto"
-  },
-
-  back: {
-    textDecoration: "none",
-    color: "#667eea",
-    fontWeight: "500"
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "20px"
-  },
-
-  thumbnail: {
-    width: "100%",
-    borderRadius: "10px",
-    cursor: "pointer"
-  },
-
-  deleteBtn: {
-    position: "absolute",
-    top: "8px",
-    right: "8px",
-    background: "red",
-    color: "#fff",
-    border: "none",
-    borderRadius: "50%",
-    width: "28px",
-    height: "28px",
-    cursor: "pointer",
-    zIndex: 2
-  },
-
-  overlay: {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(255,255,255,0.85)",
-    backdropFilter: "blur(6px)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 9999
-  },
-
-  fullVideo: {
-    width: "85vw",
-    height: "85vh",
-    borderRadius: "12px"
-  },
-
-  close: {
-    position: "absolute",
-    top: "20px",
-    right: "25px",
-    fontSize: "36px",
-    color: "#272020",
-    cursor: "pointer",
-    zIndex: 10000
-  },
-
-  title: {
-    textAlign: "center",
-    marginBottom: "30px",
-    fontSize: "36px",
-    fontWeight: "700",
-    letterSpacing: "0.5px",
-    fontFamily: `"Playfair Display", serif`,
-    color: "#2f1f1f"
-  },
-
-  navLeft: {
-    position: "absolute",
-    left: "30px",
-    fontSize: "50px",
-    background: "none",
-    border: "none",
-    cursor: "pointer"
-  },
-
-  navRight: {
-    position: "absolute",
-    right: "30px",
-    fontSize: "50px",
-    background: "none",
-    border: "none",
-    cursor: "pointer"
-  },
-
-  cartBtn: {
-    marginTop: "8px",
-    width: "100%",
-    background: "#d4af37",
-    color: "#fff",
-    border: "none",
-    padding: "6px",
-    borderRadius: "6px",
-    cursor: "pointer"
-  },
-
-  cartBtnSelected: {
-    background: "#2f855a",
-    cursor: "default"
-  }
-
-};
 
 export default EventVideos;

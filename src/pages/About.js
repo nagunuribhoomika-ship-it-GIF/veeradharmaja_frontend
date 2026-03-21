@@ -1,124 +1,132 @@
 import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/about.css"; // create this css file (given below)
 import { Link } from "react-router-dom";
+import "../styles/about.css";
+
+const highlights = [
+  {
+    title: "Proven Expertise",
+    text: "From planning to execution, every detail is shaped around your vision with calm coordination.",
+  },
+  {
+    title: "Creative Direction",
+    text: "We blend styling and storytelling to create celebrations that feel personal and visually memorable.",
+  },
+];
+
+const stats = [
+  { value: "1000+", label: "Events delivered" },
+  { value: "5+", label: "Years of experience" },
+  { value: "24/7", label: "Planning support" },
+];
 
 export default function AboutUs() {
   return (
     <>
-      {/* 🔶 HERO SECTION */}
-      <div className="hero-banner d-flex align-items-center justify-content-center text-center">
-        <div>
-          <h1 className="text-white fw-bold">About Us</h1>
-          <p className="text-white">Home &gt; About Us</p>
-        </div>
-      </div>
-
-      {/* 🔶 ABOUT INTRO */}
-      <Container className="py-5">
-        <Row>
-          <Col md={6}>
-            <p>
-              At Veera Dharmaja Events, we don’t just plan events — we craft timeless
-              memories. We are a passionate team of event organisers, wedding
-              planners, and creative storytellers dedicated to transforming
-              ordinary occasions into extraordinary experiences.
-            </p>
-
-            <p>
-              From grand weddings and intimate sangeets to corporate conferences
-              and brand activations, our mission is to make every event meaningful,
-              magical, and memorable.
-            </p>
-          </Col>
-
-          {/* 🔶 CITY CARDS */}
-          <Col md={6}>
-            <Row>
-              {["Hyderabad", "GodavariKhani", "Visakhapatnam", "Vijayawada"].map(
-                (city, index) => (
-                  <Col md={6} key={index}>
-                    <Card className="city-card text-center p-4">
-                      <div className="city-icon">📍</div>
-                      <h5>{city}</h5>
-                      <Link to="/contact" className="read-more">
-                        Readmore
-                      </Link>
-                    </Card>
-                  </Col>
-                )
-              )}
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-
-      {/* 🔶 WHY CHOOSE US */}
-      <div className="why-section py-5">
+      <section className="about-hero">
         <Container>
-          <Row className="align-items-center">
-            <Col md={6}>
-              <img
-                src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3"
-                alt="event"
-                className="img-fluid rounded"
-              />
+          <div className="about-hero__content">
+            <span className="about-eyebrow">Veeradharmaja Events</span>
+            <h1>Designing celebrations with elegance, warmth, and unforgettable detail.</h1>
+            <p>
+              We turn weddings, private gatherings, and brand experiences into
+              polished celebrations that feel effortless for you and memorable
+              for everyone attending.
+            </p>
+
+            <div className="about-hero__actions">
+              <Link to="/contact" className="about-btn about-btn--primary">
+                Plan Your Event
+              </Link>
+              <Link to="/services" className="about-btn about-btn--secondary">
+                Explore Services
+              </Link>
+            </div>
+
+            <div className="about-stats">
+              {stats.map((item) => (
+                <div className="about-stat" key={item.label}>
+                  <strong>{item.value}</strong>
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="about-intro">
+        <Container>
+          <Row className="g-4 align-items-stretch">
+            <Col lg={7}>
+              <div className="about-panel about-panel--intro">
+                <span className="section-tag">About Us</span>
+                <h2>Creating elegant events with heart and precision.</h2>
+                <p>
+                  At Veeradharmaja Events, we do not just plan events. We craft
+                  memorable experiences through thoughtful planning, elegant
+                  styling, and seamless coordination.
+                </p>
+                <p>
+                  From weddings to private and corporate events, our mission is
+                  to make every occasion meaningful, beautiful, and stress-free.
+                </p>
+              </div>
             </Col>
 
-            <Col md={6}>
-              <h2 className="fw-bold mb-4">Why Choose Us?</h2>
-
-              <div className="feature">
-                <h5>Proven Expertise</h5>
-                <p>
-                  From planning to execution, every detail is tailored to your
-                  vision. Expect flawless execution from a passionate team.
+            <Col lg={5}>
+              <div className="about-panel about-panel--quote">
+                <span className="section-tag">Our Promise</span>
+                <p className="about-quote">
+                  Every celebration deserves a mood, a rhythm, and a story that
+                  feels unmistakably yours.
                 </p>
-              </div>
-
-              <div className="feature">
-                <h5>Results Driven</h5>
-                <p>
-                  We don’t just plan events — we create unforgettable experiences
-                  crafted to match your personal style.
-                </p>
-              </div>
-
-              <div className="feature">
-                <h5>Success Stories</h5>
-                <p>
-                  Our commitment to creativity and client satisfaction speaks
-                  through happy clients and memorable celebrations.
-                </p>
+                <Link to="/contact" className="text-link">
+                  Start your event journey
+                </Link>
               </div>
             </Col>
           </Row>
         </Container>
-      </div>
+      </section>
 
-      {/* 🔶 OUR STORY */}
-      <div className="story-section py-5">
+      <section className="why-section">
         <Container>
-          <h2 className="fw-bold mb-3">Our Story</h2>
+          <Row className="g-4 align-items-center">
+            <Col lg={6}>
+              <div className="why-visual">
+                <img
+                  src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80"
+                  alt="Veeradharmaja Events celebration setup"
+                  className="img-fluid"
+                />
+              </div>
+            </Col>
 
-          <p>
-            The journey of Prashasta Events began with a simple idea — to make
-            every celebration feel personal, elegant, and effortless.
-          </p>
+            <Col lg={6}>
+              <div className="section-heading section-heading--left">
+                <span className="section-tag">Why Choose Us</span>
+                <h2>We bring style, clarity, and care to every celebration.</h2>
+              </div>
 
-          <p>
-            What started as a small team of creative planners has grown into one
-            of the top event organisers, serving clients across luxury weddings,
-            corporate functions, and themed celebrations.
-          </p>
-
-          <p className="fw-semibold">
-            With 5+ years of experience, we've handled more than 1,000 events,
-            earning love, loyalty, and lasting relationships.
-          </p>
+              <div className="features-list">
+                {highlights.map((item, index) => (
+                  <div className="feature-card" key={item.title}>
+                    <span className="feature-index">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h5>{item.title}</h5>
+                      <p>{item.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Col>
+          </Row>
         </Container>
-      </div>
+      </section>
     </>
   );
 }

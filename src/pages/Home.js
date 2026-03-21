@@ -1,38 +1,29 @@
-import { Link } from "react-router-dom";
 import Cards from "./Cards";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./Home.css";
 
 function Home() {
   return (
-    <div
-      className="home-page"
-      style={{
-        minHeight: "100vh",
-        paddingTop: "120px"
-      }}
-    >
+    <div className="home-page service-home-page">
+      <section className="services-showcase">
+        <div className="services-showcase__intro">
+          <span className="services-showcase__eyebrow">Our Services</span>
+          <h1>Elegant event services crafted for memorable celebrations</h1>
+          <p>
+            Explore our curated event categories with a refined presentation
+            designed to keep the focus on your services and signature work.
+          </p>
 
-      {/* ================= SERVICES ================= */}
-      <section className="text-center">
-        <div className="container">
+          <div className="services-divider" aria-hidden="true">
+            <span className="services-divider__line" />
+            <span className="services-divider__diamond" />
+            <span className="services-divider__line" />
+          </div>
+        </div>
 
-          <h2 className="fw-bold mb-2">Our Services</h2>
-
-          <div
-            style={{
-              width: "80px",
-              height: "3px",
-              background: "#ffc107",
-              margin: "0 auto 15px",
-            }}
-          ></div>
-
-          {/* Cards Grid */}
+        <div className="services-cards-wrap">
           <Cards />
-
         </div>
       </section>
-
     </div>
   );
 }

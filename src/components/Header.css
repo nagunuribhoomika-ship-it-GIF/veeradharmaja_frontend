@@ -38,6 +38,21 @@ background: #2b1d18;
   margin-left: 20px;
 }
 
+.header-admin-btn {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: 1px solid rgba(241, 230, 220, 0.32);
+  border-radius: 999px;
+  background: rgba(241, 230, 220, 0.12);
+  color: #f1e6dc;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.header-admin-btn:hover {
+  background: rgba(241, 230, 220, 0.2);
+}
+
 /* VISIBILITY CONTROL */
 .desktop-only {
   display: flex;
@@ -160,6 +175,15 @@ background: #2b1d18;
   color: #5a2a2a;
   font-weight: 600;
   font-size: 15px;
+}
+
+.header-admin-btn--mobile {
+  margin-left: 0;
+  width: 100%;
+  justify-content: center;
+  background: #5a2a2a;
+  color: #fff;
+  border: none;
 }
 
 .header-logo {

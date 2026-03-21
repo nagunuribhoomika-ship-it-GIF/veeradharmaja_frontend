@@ -89,6 +89,14 @@ export const deleteEvent = (eventId) =>
     auth: true
   });
 
+export const updateEvent = (eventId, payload) =>
+  fetchJson(`/api/events/${eventId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    auth: true,
+    body: JSON.stringify(payload)
+  });
+
 export const getEventBySlug = (slug) =>
   fetchJson(`/api/events/slug/${slug}`);
 

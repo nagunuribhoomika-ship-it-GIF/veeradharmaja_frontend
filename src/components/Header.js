@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { clearAdminToken, isAdminLoggedIn, subscribeToAdminAuth } from "../services/auth";
 import "./Header.css";
 import logo from "../assets/hero/logo.png";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(isAdminLoggedIn());
+
+  useEffect(() => {
+    return subscribeToAdminAuth(() => {
+      setIsAdmin(isAdminLoggedIn());
+    });
+  }, []);
+
+  const handleLogout = () => {
+    clearAdminToken();
+    setMenuOpen(false);
+  };
 
   return (
     <header className="site-header">
@@ -17,6 +30,15 @@ function Header() {
           <Link to="/services">Our Services</Link>
           <Link to="/portfolio">Our Portfolio</Link>
           <Link to="/contact">Contact Us</Link>
+          {isAdmin && (
+            <button
+              type="button"
+              className="header-admin-btn"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          )}
         </nav>
 
         <img src={logo} alt="Company Logo" className="header-logo" />
@@ -45,6 +67,15 @@ function Header() {
               <Link to="/services" onClick={() => setMenuOpen(false)}>Our Services</Link>
               <Link to="/portfolio" onClick={() => setMenuOpen(false)}>Our Portfolio</Link>
               <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link>
+              {isAdmin && (
+                <button
+                  type="button"
+                  className="header-admin-btn header-admin-btn--mobile"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              )}
             </nav>
           </div>
         </div>

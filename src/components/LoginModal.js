@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { loginAdmin } from "../services/Api";
+import { setAdminToken } from "../services/auth";
 
 function LoginModal({ onClose, onLogin }) {
   const [username, setUsername] = useState("");
@@ -12,7 +13,7 @@ function LoginModal({ onClose, onLogin }) {
     try {
       const data = await loginAdmin({ username, password });
 
-      localStorage.setItem("token", data.token);
+      setAdminToken(data.token);
       onLogin();
       onClose();
     } catch (error) {
