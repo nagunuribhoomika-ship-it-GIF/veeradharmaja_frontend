@@ -1,13 +1,23 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { getFileUrl, submitContactEnquiry } from "../services/Api";
+import { useNavigate } from "react-router-dom";
 
 function CartPage() {
-
   const { cart, removeFromCart } = useContext(CartContext);
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
+  const previousCartLength = useRef(cart.length);
+
+  useEffect(() => {
+    if (previousCartLength.current > 0 && cart.length === 0) {
+      navigate("/");
+    }
+
+    previousCartLength.current = cart.length;
+  }, [cart.length, navigate]);
 
   const getMediaType = (item) => {
     if (item.mediaType) return item.mediaType;
