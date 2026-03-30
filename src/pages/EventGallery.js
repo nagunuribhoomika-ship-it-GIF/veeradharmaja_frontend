@@ -154,7 +154,7 @@ function EventGallery() {
             )}
 
             <img
-              src={getFileUrl(img.file_path)}
+               src={img.file_path}
               alt={`${eventName} item ${i + 1}`}
               className="event-media-thumb event-media-thumb--image"
               onClick={() => setCurrentIndex(i)}
@@ -199,7 +199,7 @@ function EventGallery() {
 
           <div {...handlers} className="event-media-viewer event-media-viewer--image">
             <img
-              src={getFileUrl(images[currentIndex].file_path)}
+             src={images[currentIndex].file_path}
               alt="Full view"
               className="event-media-full-image"
             />
